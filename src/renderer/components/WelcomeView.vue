@@ -69,6 +69,10 @@
             previewUrl: 'https://unsplash.it/200?image=' + index
           })
         }
+      },
+      onCloseDialog () {
+        this.dialog = false
+        this.currentImage = {}
       }
     },
     data: () => ({
@@ -80,6 +84,7 @@
     mounted () {
       Mousetrap.bind('left', () => this.onChangeImage(-1), 'keyup')
       Mousetrap.bind('right', () => this.onChangeImage(1), 'keyup')
+      Mousetrap.bind('esc', () => this.onCloseDialog(), 'keyup')
       this.loadImages()
     }
   }
