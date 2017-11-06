@@ -16,7 +16,17 @@
         </v-card>
       </v-flex>
       <v-dialog v-model="dialog" max-height=1080 max-width=1920>
-        <v-card flat tile>
+        <v-container v-if="!isLoaded">
+          <v-layout row>
+            <v-flex xs2 offset-xs5>
+              <!--
+                <v-progress-circular indeterminate v-bind:size="75" v-bind:width="3" color="grey lighten-4"></v-progress-circular>
+              -->
+              <v-progress-linear v-bind:indeterminate="true" color="grey lighten-4" height="5"></v-progress-linear>
+            </v-flex>
+          </v-layout>
+        </v-container>
+        <v-card flat tile v-if="isLoaded">
           <v-card-media
             :src="currentImage.url"
             height=725
@@ -34,11 +44,13 @@
     name: 'welcome',
     methods: {
       loadImage (image) {
+        this.isLoaded = false
+        this.dialog = true
         let img = new Image()
         img.src = image.url
         img.addEventListener('load', () => {
           this.currentImage = image
-          this.dialog = true
+          this.isLoaded = true
         })
       },
       onChangeImage (val) {
@@ -62,7 +74,8 @@
     data: () => ({
       dialog: false,
       currentImage: {},
-      images: []
+      images: [],
+      isLoaded: false
     }),
     mounted () {
       Mousetrap.bind('left', () => this.onChangeImage(-1), 'keyup')
