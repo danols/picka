@@ -40,6 +40,7 @@
 
 <script>
   var Mousetrap = require('mousetrap')
+  var fs = require('fs')
   export default {
     name: 'welcome',
     methods: {
@@ -86,6 +87,10 @@
       Mousetrap.bind('right', () => this.onChangeImage(1), 'keyup')
       Mousetrap.bind('esc', () => this.onCloseDialog(), 'keyup')
       this.loadImages()
+      fs.writeFile('mynewfile3.txt', 'This is my text', function (err) {
+        if (err) throw err
+        console.log('Replaced!')
+      })
     }
   }
 </script>
